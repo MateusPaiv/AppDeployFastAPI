@@ -24,6 +24,9 @@ def list_produtos():
     print(produtos)
     return produtos
 
+@app.get("/")
+def home():
+    return {"Hello": "Welcome to the jungle"}
 # @app.post("/produto", response_model=Produto)
 # def save_product(produto: Produto):
 #     novo_produto = insert(nome=produto.nome, valor=produto.valor)
