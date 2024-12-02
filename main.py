@@ -4,7 +4,10 @@ from sqladmin import Admin, ModelView
 from database import engine
 from models import Produto, Sale
 import uvicorn
+import os
 
+
+environment = os.getenv("ENVIRONMENT", "production")
 app = FastAPI()
 admin = Admin(app, engine)
 
@@ -26,7 +29,10 @@ def list_produtos():
 
 @app.get("/")
 def home():
-    return {"Hello": "Welcome to the jungle"}
+    if environment == "development":
+        return {"message": "Running in development mode"}
+    else:
+        return {"message": "Running in production mode"}
     
 admin.add_view(Produto)
 admin.add_view(Sale)
