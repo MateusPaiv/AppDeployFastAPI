@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from services import insert, select
+from services import select_produtos
 from sqladmin import Admin, ModelView
 from database import engine
 from models import Produto, Sale
@@ -20,17 +20,13 @@ class Sale(ModelView, model=Sale):
 
 @app.get("/produtos")
 def list_produtos():
-    produtos = select()
+    produtos = select_produtos()
     print(produtos)
     return produtos
 
 @app.get("/")
 def home():
     return {"Hello": "Welcome to the jungle"}
-# @app.post("/produto", response_model=Produto)
-# def save_product(produto: Produto):
-#     novo_produto = insert(nome=produto.nome, valor=produto.valor)
-#     return {"id": novo_produto.id, "nome": novo_produto.nome, "valor": novo_produto.valor}
     
 admin.add_view(Produto)
 admin.add_view(Sale)

@@ -11,7 +11,7 @@ def insert(nome, valor):
         return produto
 
 
-def select():
+def select_produtos():
     with Session(engine) as session:
         search = select(Produto)
         produtos = session.exec(search).all()
