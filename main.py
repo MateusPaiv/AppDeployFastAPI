@@ -26,7 +26,7 @@ def list_produtos():
 
 @app.get("/")
 def home():
-    return {"Hello": "Welcome to the jungle"}
+    return {"Hello": "Welcome to my place"}
     
 admin.add_view(Produto)
 admin.add_view(Sale)
