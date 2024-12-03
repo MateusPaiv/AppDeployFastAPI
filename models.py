@@ -1,5 +1,6 @@
 from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
+from pydantic import BaseModel
 
 class Produto(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -19,4 +20,6 @@ class Sale(SQLModel, table=True):
     # Relacionamento com Produto
     produto: Optional[Produto] = Relationship(back_populates="sales")
 
-    
+class SignRequest(BaseModel):
+    name: str
+    password: str
