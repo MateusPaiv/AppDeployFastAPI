@@ -1,14 +1,17 @@
 from sqlmodel import Session, select
-from models import Produto
+from models import Produto, Customer
 from database import engine
+from database import engine
+from sqlalchemy import MetaData, Table, select
 
-def insert(nome, valor): 
+
+def insert(nome, age): 
     with Session(engine) as session:
-        produto = Produto(nome=nome, valor=valor)
-        session.add(produto)
+        customer = Customer(name=nome, age=age)
+        session.add(customer)
         session.commit()
-        session.refresh(produto) 
-        return produto
+        session.refresh(customer) 
+        return customer
 
 
 def select_produtos():
@@ -17,3 +20,15 @@ def select_produtos():
         produtos = session.exec(search).all()
         print(produtos)
         return produtos
+    
+    
+def select_vendas():
+    v = Table('vendas_view', MetaData(), autoload_with=engine)
+    with Session(engine) as session:  
+        vendas = session.exec(v.select())
+        lista = []
+        for row in vendas:
+            lista.append(row)
+        
+        print(lista)
+        return lista

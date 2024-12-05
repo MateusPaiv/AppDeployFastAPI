@@ -1,1 +1,1 @@
-web: gunicorn --worker-tmp-dir /dev/shm --config gunicorn.config.py main:app
+web: alembic upgrade head && gunicorn --worker-tmp-dir /dev/shm --config gunicorn.config.py main:app
