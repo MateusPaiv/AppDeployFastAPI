@@ -3,7 +3,7 @@ import uvicorn
 import os
 from sqladmin import Admin, ModelView
 from app.database import engine
-from app.models.todo import Todo 
+from app.models.todo import Todo, User
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import todo
 
@@ -75,18 +75,10 @@ admin = Admin(app, engine)
 class Todo(ModelView, model=Todo):
     column_list = [Todo.title, Todo.description]
 
-# class Customer(ModelView, model=Customer):
-#     column_list = [Customer.name, Customer.age]
-#     can_delete = False
-#     can_edit = False
+class User(ModelView, model=User):
+    can_delete = False
+    can_edit = False
+    column_list = ('user', 'todo')
     
-    
-# class Sale(ModelView, model=Sale):
-#     can_delete = False
-#     can_edit = False
-#     column_list = ('total', 'produto','customer')
-    
-# admin.add_view(Produto)
-# admin.add_view(Sale)
-
 admin.add_view(Todo)
+admin.add_view(User)
