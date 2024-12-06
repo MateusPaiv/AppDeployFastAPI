@@ -7,7 +7,5 @@ DATABASE_URL = "postgresql://postgres.gukfcizmqwjthzueiyqm:QhXXjU3OAeDEDgxQ@aws-
 
 try:
     engine = create_engine(DATABASE_URL, echo=True)
-    SQLModel.metadata.create_all(engine)
-        
 except Exception as e:
     print(f"Erro ao conectar ao banco de dados: {e}")
