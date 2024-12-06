@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, create_engine
+from sqlmodel import create_engine
 import os
 
 environment = os.getenv("ENVIRONMENT", "development")

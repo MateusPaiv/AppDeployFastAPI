@@ -1,8 +1,9 @@
 import jwt
 from fastapi import HTTPException
+import os
 
-
-JWT_SECRET = "bUqIEakocsDAsGLQ0hhkLDSulcmChoCjqSTtPeIno8kwsscgf3BmdV/Xwl6oZIZuyG77x6jP3Zeci93mVcNz4g==" 
+environment = os.getenv("ENVIRONMENT", "development")
+JWT_SECRET = "bUqIEakocsDAsGLQ0hhkLDSulcmChoCjqSTtPeIno8kwsscgf3BmdV/Xwl6oZIZuyG77x6jP3Zeci93mVcNz4g==" if environment == "development" else "ZESwCG552GZv2SnHzL6ZEkDIrVs/M++SgjF3urCCsu7UNWKnv4AuSdCdQ/FW8j0zX0pF0Jv3Z3sLmaQaU7A4Fw=="
 
 def is_authenticated(authorization: str):
     if not authorization.startswith("Bearer "):

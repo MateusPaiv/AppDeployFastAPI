@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlmodel import Session
 from app.database import engine
-from app.crud.todo import get_all_todos
+from app.crud.todo import get_all_todos, get_all_todos_users
 from app.models.todo import Todo
-from app.schemas.todo import TodoRead
+from app.schemas.todo import TodoRead, TodoView
 from app.utils import auth
 
 router = APIRouter(prefix="/todos", tags=["Todos"])
@@ -12,12 +12,18 @@ def get_session():
     with Session(engine) as session:
         yield session
 
-@router.get("/", response_model=list[TodoRead])
-def read_todos(session: Session = Depends(get_session)):
-    return get_all_todos(session)
+@router.get("/", response_model=list[TodoView])
+def read_todos(session: Session = Depends(get_session),authorization: str = Header(default=None)):
+    if not auth.is_authenticated(authorization):
+        raise HTTPException(status_code=401,
+                            detail="Authentication credentials were not provided")
+    return get_all_todos_users(session)
 
 @router.get("/{todo_id}", response_model=TodoRead)
-def read_todo(todo_id: int, session: Session = Depends(get_session)):
+def read_todo(todo_id: int, session: Session = Depends(get_session),authorization: str = Header(default=None)):
+    if not auth.is_authenticated(authorization):
+        raise HTTPException(status_code=401,
+                            detail="Authentication credentials were not provided")
     todo = session.get(Todo, todo_id)
     if not todo:
         raise HTTPException(status_code=404, detail="Hero not found")
@@ -33,8 +39,11 @@ def create_new_todo(todo: Todo, session: Session = Depends(get_session), authori
     session.refresh(todo)
     return todo
 
-@router.patch("/{hero_id}", response_model=TodoRead)
-def update_todo(todo_id: int, todo: Todo):
+@router.patch("/{todo_id}", response_model=TodoRead)
+def update_todo(todo_id: int, todo: Todo,authorization: str = Header(default=None)):
+    if not auth.is_authenticated(authorization):
+        raise HTTPException(status_code=401,
+                            detail="Authentication credentials were not provided")
     with Session(engine) as session:
         db_todo = session.get(Todo, todo_id)
         if not db_todo:

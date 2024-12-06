@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI
 import uvicorn
 import os
 from sqladmin import Admin, ModelView
@@ -31,22 +31,6 @@ if __name__ == "__main__":
     uvicorn.run("main:app", port=8000, reload=True)
     
 
-# class VendasAll(ModelView, model=VendasAll):
-#     vendas = view_vendas()
-#     lista = []
-#     colunas = [
-#         "produto_nome",
-#         "produto_valor",
-#         "produto_descricao",
-#         "venda_total",
-#         "cliente_nome",
-#         "cliente_idade",
-#     ]
-
-#     for row in vendas:
-#         lista.append(dict(zip(colunas, row)))
-#     print(lista)
-#     column_list = lista
     
 # @app.get("/produtos")
 # def list_produtos(authorization: str = Header(default=None)):
@@ -73,12 +57,12 @@ if __name__ == "__main__":
 admin = Admin(app, engine)
 
 class Todo(ModelView, model=Todo):
-    column_list = [Todo.title, Todo.description]
+    column_list = [Todo.title, Todo.description, Todo.is_completed, Todo.user_id]
 
 class User(ModelView, model=User):
     can_delete = False
     can_edit = False
-    column_list = ('user', 'todo')
+    column_list = [User.name, User.email]
     
 admin.add_view(Todo)
 admin.add_view(User)
