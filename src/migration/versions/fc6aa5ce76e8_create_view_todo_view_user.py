@@ -1,25 +1,23 @@
-"""create view user and todo
+"""create view todo_view_user
 
-Revision ID: 8b287fb211bf
-Revises: 53bbd85f55f6
-Create Date: 2024-12-06 12:02:43.674485
+Revision ID: fc6aa5ce76e8
+Revises: 
+Create Date: 2024-12-11 14:57:24.513696
 
 """
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-from app.utils.create_method import ReplaceableObject
-
+from app.core.utils.create_method import ReplaceableObject
 # revision identifiers, used by Alembic.
-revision: str = '8b287fb211bf'
-down_revision: Union[str, None] = '53bbd85f55f6'
+revision: str = 'fc6aa5ce76e8'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
-
 customer_view = ReplaceableObject(
-    "todo_views",
+    "todo_users_views",
     """
         SELECT
             t.title AS todo_title,
@@ -32,6 +30,7 @@ customer_view = ReplaceableObject(
         JOIN
             "user" u ON t.user_id = u.id;
     """)
+
 def upgrade() -> None:
     op.create_view(customer_view)
 

@@ -1,8 +1,8 @@
 run-production:
-	alembic upgrade head && gunicorn --worker-tmp-dir /dev/shm --config gunicorn.config.py app.main:app
+	cd src && alembic upgrade head && cd .. && gunicorn --worker-tmp-dir /dev/shm --config gunicorn.config.py src.app.main:app
 
 run-dev:
-	alembic upgrade head && uvicorn app.main:app
+	cd src && alembic upgrade head && cd .. && uvicorn src.app.main:app
 
 create-db-migration:
 	@echo "Migration title: "; \

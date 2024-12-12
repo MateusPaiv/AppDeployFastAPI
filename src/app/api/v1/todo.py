@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlmodel import Session
-from app.database import engine
-from app.crud.todo import get_all_todos, get_all_todos_users
-from app.models.todo import Todo
-from app.schemas.todo import TodoRead, TodoView
-from app.utils import auth
+from src.app.core.db.database import engine
+from src.app.crud.todo import get_all_todos, get_all_todos_users
+from src.app.models.todo import Todo
+from src.app.schemas.todo import TodoRead, TodoView
+from src.app.core.utils import auth
 
 router = APIRouter(prefix="/todos", tags=["Todos"])
 

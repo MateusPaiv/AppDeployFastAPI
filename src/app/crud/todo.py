@@ -1,6 +1,6 @@
 from sqlmodel import Session, select
-from app.models.todo import Todo
-from app.database import engine
+from src.app.models.todo import Todo
+from src.app.core.db.database import engine
 from sqlalchemy import MetaData, Table, select
 
 def get_all_todos(session: Session):

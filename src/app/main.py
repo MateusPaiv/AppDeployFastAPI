@@ -2,10 +2,10 @@ from fastapi import FastAPI
 import uvicorn
 import os
 from sqladmin import Admin, ModelView
-from app.database import engine
-from app.models.todo import Todo, User
+from src.app.core.db.database import engine
+from src.app.models.todo import Todo, User
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import todo
+from src.app.api.v1 import todo
 
 environment = os.getenv("ENVIRONMENT", "development")
 app = FastAPI(title="TODO API", version="1.0.0")
